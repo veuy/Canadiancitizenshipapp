@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Canadian Citizenship App</string>
+    <string name="title_dashboard">🍁 Citizenship Exam 🍁</string>
+    <string name="subtitle_dashboard">Select a category to begin your study journey.</string>
+    <string name="study_materials">Study Materials</string>
+    <string name="practice_exam">Practice Exam</string>
+    <string name="mock_exam">Mock Exam</string>
+    <string name="settings">Settings</string>
+    <string name="title_study_guide">Study Guide</string>
+    <string name="hint_search_chapters">Search chapters...</string>
+    <string name="btn_take_quiz">Take Chapter Quiz</string>
+    <string name="bookmark">Bookmark</string>
+</resources>
