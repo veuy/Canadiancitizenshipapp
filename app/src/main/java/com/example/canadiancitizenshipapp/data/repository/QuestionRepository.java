@@ -44,6 +44,18 @@ public class QuestionRepository {
         });
     }
 
+    public void getRandomMockQuestions(RepositoryCallback<List<Question>> callback) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            List<Question> all = questionDao.getAllQuestionsList();
+            if (all.size() >= 20) {
+                java.util.Collections.shuffle(all);
+                callback.onComplete(new ArrayList<>(all.subList(0, 20)));
+            } else {
+                callback.onComplete(null);
+            }
+        });
+    }
+
     public interface RepositoryCallback<T> {
         void onComplete(T result);
     }

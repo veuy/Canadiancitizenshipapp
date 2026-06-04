@@ -65,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
             case "PRACTICE": 
                 startActivity(new android.content.Intent(this, PracticeActivity.class));
                 break;
-            case "MOCK": showToast("Starting Offline Mock Exam"); break;
+            case "MOCK": 
+                android.content.Intent intent = new android.content.Intent(this, PracticeExamActivity.class);
+                intent.putExtra("is_mock", true);
+                startActivity(intent);
+                break;
         }
     }
 
