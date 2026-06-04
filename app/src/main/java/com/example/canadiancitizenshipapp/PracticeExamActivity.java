@@ -24,6 +24,7 @@ public class PracticeExamActivity extends AppCompatActivity {
     private int score = 0;
     private int examIndex;
     private boolean isAnswered = false;
+    private boolean isMock = false;
     private CountDownTimer timer;
 
     @Override
@@ -33,21 +34,32 @@ public class PracticeExamActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         examIndex = getIntent().getIntExtra("exam_index", 0);
+        isMock = getIntent().getBooleanExtra("is_mock", false);
         repository = new QuestionRepository(getApplication());
 
         setSupportActionBar(binding.examToolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Exam " + (examIndex + 1));
+            getSupportActionBar().setTitle(isMock ? "Mock Exam" : "Exam " + (examIndex + 1));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         loadQuestions();
         startTimer();
 
-        binding.btnSubmit.setOnClickListener(v -> {
-            if (!isAnswered) checkAnswer();
-            else nextQuestion();
-        });
+        if (isMock) {
+            binding.btnSubmit.setVisibility(View.GONE);
+            binding.rgOptions.setOnCheckedChangeListener((group, checkedId) -> {
+                if (checkedId != -1) {
+                    // Slight delay so user can see their selection
+                    group.postDelayed(this::checkAnswer, 200);
+                }
+            });
+        } else {
+            binding.btnSubmit.setOnClickListener(v -> {
+                if (!isAnswered) checkAnswer();
+                else nextQuestion();
+            });
+        }
 
         binding.btnRetake.setOnClickListener(v -> recreate());
         binding.btnBack.setOnClickListener(v -> finish());
@@ -75,14 +87,25 @@ public class PracticeExamActivity extends AppCompatActivity {
     }
 
     private void loadQuestions() {
-        repository.getPracticeExamQuestions(examIndex, result -> {
-            if (result != null) {
-                runOnUiThread(() -> {
-                    questionList = result;
-                    displayQuestion();
-                });
-            }
-        });
+        if (isMock) {
+            repository.getRandomMockQuestions(result -> {
+                if (result != null) {
+                    runOnUiThread(() -> {
+                        questionList = result;
+                        displayQuestion();
+                    });
+                }
+            });
+        } else {
+            repository.getPracticeExamQuestions(examIndex, result -> {
+                if (result != null) {
+                    runOnUiThread(() -> {
+                        questionList = result;
+                        displayQuestion();
+                    });
+                }
+            });
+        }
     }
 
     private void displayQuestion() {
@@ -121,23 +144,36 @@ public class PracticeExamActivity extends AppCompatActivity {
             return;
         }
 
-        isAnswered = true;
         RadioButton selectedRb = findViewById(selectedId);
         String selectedAnswer = selectedRb.getText().toString();
         userAnswers.add(selectedAnswer);
         Question q = questionList.get(currentQuestionIndex);
 
-        for (int i = 0; i < binding.rgOptions.getChildCount(); i++) binding.rgOptions.getChildAt(i).setEnabled(false);
-
         if (selectedAnswer.equals(q.correctAnswer)) {
-            selectedRb.setBackgroundColor(Color.parseColor("#C8E6C9"));
             score++;
-        } else {
-            selectedRb.setBackgroundColor(Color.parseColor("#FFCDD2"));
-            highlightCorrectAnswer(q.correctAnswer);
         }
 
-        binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
+        if (isMock) {
+            // In Mock Exam, go to next question immediately without feedback
+            if (currentQuestionIndex < 19) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        } else {
+            // In Practice Exam, show feedback
+            isAnswered = true;
+            for (int i = 0; i < binding.rgOptions.getChildCount(); i++) binding.rgOptions.getChildAt(i).setEnabled(false);
+
+            if (selectedAnswer.equals(q.correctAnswer)) {
+                selectedRb.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else {
+                selectedRb.setBackgroundColor(Color.parseColor("#FFCDD2"));
+                highlightCorrectAnswer(q.correctAnswer);
+            }
+            binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
+        }
     }
 
     private void highlightCorrectAnswer(String correct) {
@@ -173,10 +209,14 @@ public class PracticeExamActivity extends AppCompatActivity {
 
         // Passing logic: Show dashboard button more clearly
         if (passed) {
-            SharedPreferences prefs = getSharedPreferences("practice_prefs", MODE_PRIVATE);
-            prefs.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+            if (!isMock) {
+                SharedPreferences prefs = getSharedPreferences("practice_prefs", MODE_PRIVATE);
+                prefs.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+                binding.btnBack.setText("Return to Exams");
+            } else {
+                binding.btnBack.setText("Return to Dashboard");
+            }
             binding.btnRetake.setVisibility(View.GONE);
-            binding.btnBack.setText("Return to Exams");
             binding.btnBack.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF0000")));
             binding.btnBack.setTextColor(Color.WHITE);
         } else {
