@@ -19,7 +19,7 @@ public class PracticeExamActivity extends AppCompatActivity {
     private ActivityPracticeExamBinding binding;
     private QuestionRepository repository;
     private List<Question> questionList;
-    private List<String> userAnswers = new ArrayList<>();
+    private final List<String> userAnswers = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private int score = 0;
     private int examIndex;
@@ -78,15 +78,24 @@ public class PracticeExamActivity extends AppCompatActivity {
                 int seconds = (int) (millisUntilFinished / 1000) % 60;
                 binding.tvTimer.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds));
             }
-
             @Override
-            public void onFinish() {
-                showResults();
-            }
+            public void onFinish() { showResults(); }
         }.start();
     }
 
     private void loadQuestions() {
+ feat/settings-darkmode-cleanup
+        QuestionRepository.RepositoryCallback<List<Question>> callback = result -> {
+            if (result != null) {
+                runOnUiThread(() -> {
+                    questionList = result;
+                    displayQuestion();
+                });
+            }
+        };
+        if (isMock) repository.getRandomMockQuestions(callback);
+        else repository.getPracticeExamQuestions(examIndex, callback);
+
         if (isMock) {
             repository.getRandomMockQuestions(result -> {
                 if (result != null) {
@@ -106,6 +115,7 @@ public class PracticeExamActivity extends AppCompatActivity {
                 }
             });
         }
+ main
     }
 
     private void displayQuestion() {
@@ -118,7 +128,7 @@ public class PracticeExamActivity extends AppCompatActivity {
         }
 
         Question q = questionList.get(currentQuestionIndex);
-        binding.tvQuestionCount.setText("Question " + (currentQuestionIndex + 1) + " of 20");
+        binding.tvQuestionCount.setText(String.format(Locale.getDefault(), "Question %d of 20", currentQuestionIndex + 1));
         binding.examProgress.setProgress((int) (((float) (currentQuestionIndex + 1) / 20) * 100));
         binding.tvQuestionText.setText(q.text);
 
@@ -140,7 +150,7 @@ public class PracticeExamActivity extends AppCompatActivity {
     private void checkAnswer() {
         int selectedId = binding.rgOptions.getCheckedRadioButtonId();
         if (selectedId == -1) {
-            Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show();
+            if (!isMock) Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -148,6 +158,28 @@ public class PracticeExamActivity extends AppCompatActivity {
         String selectedAnswer = selectedRb.getText().toString();
         userAnswers.add(selectedAnswer);
         Question q = questionList.get(currentQuestionIndex);
+
+ feat/settings-darkmode-cleanup
+        if (selectedAnswer.equals(q.correctAnswer)) score++;
+
+        if (isMock) {
+            if (currentQuestionIndex < 19) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        } else {
+            isAnswered = true;
+            for (int i = 0; i < binding.rgOptions.getChildCount(); i++) binding.rgOptions.getChildAt(i).setEnabled(false);
+            if (selectedAnswer.equals(q.correctAnswer)) {
+                selectedRb.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else {
+                selectedRb.setBackgroundColor(Color.parseColor("#FFCDD2"));
+                highlightCorrectAnswer(q.correctAnswer);
+            }
+            binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
+        }
 
         if (selectedAnswer.equals(q.correctAnswer)) {
             score++;
@@ -174,6 +206,7 @@ public class PracticeExamActivity extends AppCompatActivity {
             }
             binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
         }
+ main
     }
 
     private void highlightCorrectAnswer(String correct) {
@@ -195,23 +228,20 @@ public class PracticeExamActivity extends AppCompatActivity {
     private void showResults() {
         if (timer != null) timer.cancel();
         binding.layoutResult.setVisibility(View.VISIBLE);
-        
-        // Ensure userAnswers size matches questionList for Review screen
-        while (userAnswers.size() < questionList.size()) {
-            userAnswers.add("Not Answered");
-        }
-
-        binding.tvScore.setText("Score: " + score + "/20");
-        
+        while (userAnswers.size() < questionList.size()) userAnswers.add("Not Answered");
+        binding.tvScore.setText(String.format(Locale.getDefault(), "Score: %d/20", score));
         boolean passed = score >= 15;
         binding.tvStatus.setText(passed ? "PASSED" : "FAILED");
         binding.tvStatus.setTextColor(passed ? Color.parseColor("#4CAF50") : Color.parseColor("#F44336"));
-
-        // Passing logic: Show dashboard button more clearly
         if (passed) {
             if (!isMock) {
+ feat/settings-darkmode-cleanup
+                SharedPreferences p = getSharedPreferences("practice_prefs", MODE_PRIVATE);
+                p.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+
                 SharedPreferences prefs = getSharedPreferences("practice_prefs", MODE_PRIVATE);
                 prefs.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+ main
                 binding.btnBack.setText("Return to Exams");
             } else {
                 binding.btnBack.setText("Return to Dashboard");

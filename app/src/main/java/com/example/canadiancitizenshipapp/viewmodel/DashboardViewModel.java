@@ -48,4 +48,8 @@ public class DashboardViewModel extends AndroidViewModel {
     public void onSettingsClicked() {
         _navigationEvent.setValue("SETTINGS");
     }
+
+    public void clearNavigationEvent() {
+        _navigationEvent.setValue(null);
+    }
 }
