@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/canadian_white">
+    android:background="?android:attr/windowBackground">
 
     <!-- Top Red Accent Section - True Canadian Red -->
     <View
@@ -49,6 +49,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="-24dp"
         android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +69,7 @@
                 android:layout_marginBottom="32dp"
                 android:text="@string/subtitle_dashboard"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="15sp"
                 android:textStyle="italic" />
 

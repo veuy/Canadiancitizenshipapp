@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?android:attr/windowBackground">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/examToolbar"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Question 1 of 20"
-        android:textColor="#000000"
+        android:textColor="?attr/colorOnSurface"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/examProgress" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Question Text?"
-        android:textColor="#000000"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
             android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:buttonTint="#FF0000"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
 
         <RadioButton
             android:id="@+id/rbOptionB"
@@ -69,7 +69,7 @@
             android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:buttonTint="#FF0000"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
 
         <RadioButton
             android:id="@+id/rbOptionC"
@@ -78,7 +78,7 @@
             android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:buttonTint="#FF0000"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
 
         <RadioButton
             android:id="@+id/rbOptionD"
@@ -87,7 +87,7 @@
             android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:buttonTint="#FF0000"
-            android:textColor="#000000" />
+            android:textColor="?attr/colorOnSurface" />
     </RadioGroup>
 
     <com.google.android.material.card.MaterialCardView

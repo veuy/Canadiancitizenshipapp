@@ -8,13 +8,14 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/canadian_red</item>
         <item name="colorSecondaryVariant">@color/canadian_red</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/canadian_red</item>
+        <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Surface and Background colors -->
-        <item name="android:windowBackground">@color/canadian_white</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#000000</item>
+
+        <!-- Surface and Background colors for Dark Mode -->
+        <item name="android:windowBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnSurface">#FFFFFF</item>
     </style>
 </resources>

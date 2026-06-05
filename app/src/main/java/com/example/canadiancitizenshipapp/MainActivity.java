@@ -1,7 +1,6 @@
 package com.example.canadiancitizenshipapp;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.canadiancitizenshipapp.databinding.ActivityMainBinding;
@@ -52,24 +51,27 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getNavigationEvent().observe(this, event -> {
             if (event != null) {
                 handleNavigation(event);
+                viewModel.clearNavigationEvent(); // Consuming the event so it doesn't fire on recreation
             }
         });
     }
 
     private void handleNavigation(String event) {
         switch (event) {
-            case "SETTINGS": showToast("Settings (Offline Mode Active)"); break;
+            case "SETTINGS": 
+                startActivity(new android.content.Intent(this, SettingsActivity.class));
+                break;
             case "STUDY": 
                 startActivity(new android.content.Intent(this, StudyActivity.class));
                 break;
             case "PRACTICE": 
                 startActivity(new android.content.Intent(this, PracticeActivity.class));
                 break;
-            case "MOCK": showToast("Starting Offline Mock Exam"); break;
+            case "MOCK": 
+                android.content.Intent intent = new android.content.Intent(this, PracticeExamActivity.class);
+                intent.putExtra("is_mock", true);
+                startActivity(intent);
+                break;
         }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
