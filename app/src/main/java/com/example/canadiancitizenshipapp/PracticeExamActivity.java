@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.canadiancitizenshipapp.data.local.Question;
 import com.example.canadiancitizenshipapp.data.repository.QuestionRepository;
@@ -49,6 +50,7 @@ public class PracticeExamActivity extends AppCompatActivity {
             binding.btnSubmit.setVisibility(View.GONE);
             binding.rgOptions.setOnCheckedChangeListener((group, checkedId) -> {
                 if (checkedId != -1) {
+                    // Slight delay so user can see their selection
                     group.postDelayed(this::checkAnswer, 200);
                 }
             });
@@ -125,7 +127,10 @@ public class PracticeExamActivity extends AppCompatActivity {
 
     private void checkAnswer() {
         int selectedId = binding.rgOptions.getCheckedRadioButtonId();
-        if (selectedId == -1) return;
+        if (selectedId == -1) {
+            if (!isMock) Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         RadioButton selectedRb = findViewById(selectedId);
         String selectedAnswer = selectedRb.getText().toString();
