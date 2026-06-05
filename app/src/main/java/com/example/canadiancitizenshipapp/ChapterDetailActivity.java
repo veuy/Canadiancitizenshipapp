@@ -2,7 +2,6 @@ package com.example.canadiancitizenshipapp;
 
 import android.os.Bundle;
 import android.text.Html;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.canadiancitizenshipapp.databinding.ActivityChapterDetailBinding;
 

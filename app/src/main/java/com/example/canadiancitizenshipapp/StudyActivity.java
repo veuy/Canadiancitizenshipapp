@@ -3,7 +3,6 @@ package com.example.canadiancitizenshipapp;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,7 +46,9 @@ public class StudyActivity extends AppCompatActivity {
 
             @Override
             public void onQuizClick(Chapter chapter) {
-                Toast.makeText(StudyActivity.this, "Quiz for " + chapter.title + " coming soon!", Toast.LENGTH_SHORT).show();
+                android.content.Intent intent = new android.content.Intent(StudyActivity.this, QuizActivity.class);
+                intent.putExtra(QuizActivity.EXTRA_CHAPTER_TITLE, chapter.title);
+                startActivity(intent);
             }
         });
         binding.rvChapters.setLayoutManager(new LinearLayoutManager(this));
