@@ -28,7 +28,7 @@ A modern, offline-first Android application designed to help users study for and
 - [x] Integrate 12 chapters of study material.
 - [x] Implement Practice Exam engine with timer.
 - [x] Add detailed question review system.
-- [ ] Implement Mock Exam randomized pool.
+- [x] Implement Mock Exam randomized pool.
 - [ ] Dark Mode support.
 
 ## ⚙️ Installation

@@ -84,6 +84,7 @@ public class PracticeExamActivity extends AppCompatActivity {
     }
 
     private void loadQuestions() {
+ feat/settings-darkmode-cleanup
         QuestionRepository.RepositoryCallback<List<Question>> callback = result -> {
             if (result != null) {
                 runOnUiThread(() -> {
@@ -94,6 +95,27 @@ public class PracticeExamActivity extends AppCompatActivity {
         };
         if (isMock) repository.getRandomMockQuestions(callback);
         else repository.getPracticeExamQuestions(examIndex, callback);
+
+        if (isMock) {
+            repository.getRandomMockQuestions(result -> {
+                if (result != null) {
+                    runOnUiThread(() -> {
+                        questionList = result;
+                        displayQuestion();
+                    });
+                }
+            });
+        } else {
+            repository.getPracticeExamQuestions(examIndex, result -> {
+                if (result != null) {
+                    runOnUiThread(() -> {
+                        questionList = result;
+                        displayQuestion();
+                    });
+                }
+            });
+        }
+ main
     }
 
     private void displayQuestion() {
@@ -137,6 +159,7 @@ public class PracticeExamActivity extends AppCompatActivity {
         userAnswers.add(selectedAnswer);
         Question q = questionList.get(currentQuestionIndex);
 
+ feat/settings-darkmode-cleanup
         if (selectedAnswer.equals(q.correctAnswer)) score++;
 
         if (isMock) {
@@ -157,6 +180,33 @@ public class PracticeExamActivity extends AppCompatActivity {
             }
             binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
         }
+
+        if (selectedAnswer.equals(q.correctAnswer)) {
+            score++;
+        }
+
+        if (isMock) {
+            // In Mock Exam, go to next question immediately without feedback
+            if (currentQuestionIndex < 19) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        } else {
+            // In Practice Exam, show feedback
+            isAnswered = true;
+            for (int i = 0; i < binding.rgOptions.getChildCount(); i++) binding.rgOptions.getChildAt(i).setEnabled(false);
+
+            if (selectedAnswer.equals(q.correctAnswer)) {
+                selectedRb.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else {
+                selectedRb.setBackgroundColor(Color.parseColor("#FFCDD2"));
+                highlightCorrectAnswer(q.correctAnswer);
+            }
+            binding.btnSubmit.setText(currentQuestionIndex == 19 ? "Show Results" : "Next");
+        }
+ main
     }
 
     private void highlightCorrectAnswer(String correct) {
@@ -185,8 +235,13 @@ public class PracticeExamActivity extends AppCompatActivity {
         binding.tvStatus.setTextColor(passed ? Color.parseColor("#4CAF50") : Color.parseColor("#F44336"));
         if (passed) {
             if (!isMock) {
+ feat/settings-darkmode-cleanup
                 SharedPreferences p = getSharedPreferences("practice_prefs", MODE_PRIVATE);
                 p.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+
+                SharedPreferences prefs = getSharedPreferences("practice_prefs", MODE_PRIVATE);
+                prefs.edit().putBoolean("exam_passed_" + examIndex, true).apply();
+ main
                 binding.btnBack.setText("Return to Exams");
             } else {
                 binding.btnBack.setText("Return to Dashboard");
