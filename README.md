@@ -11,12 +11,15 @@ The core functionality is working, but there are still improvements planned befo
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/home page light mode.jpg" width="160" alt="Home Screen Light">
-  <img src="screenshots/home page.jpg" width="160" alt="Home Screen Dark">
-  <img src="screenshots/study guide.jpg" width="160" alt="Study Guide">
-  <img src="screenshots/chapter content.jpg" width="160" alt="Chapter Content">
-  <img src="screenshots/practice exam.jpg" width="160" alt="Practice Exam">
-  <img src="screenshots/results.jpg" width="160" alt="Results">
+  <img src="screenshots/home page light mode.jpg" width="180">
+  <img src="screenshots/home page.jpg" width="180">
+  <img src="screenshots/study guide.jpg" width="180">
+</p>
+
+<p align="center">
+  <img src="screenshots/chapter content.jpg" width="180">
+  <img src="screenshots/practice exam.jpg" width="180">
+  <img src="screenshots/results.jpg" width="180">
 </p>
 
 ## Features
