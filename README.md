@@ -1,37 +1,77 @@
-# 🇨🇦 Canadian Citizenship Exam Prep App
+# Canadian Citizenship App 🇨🇦
 
-A modern, offline-first Android application designed to help users study for and pass the Canadian Citizenship Test. The app features a comprehensive 12-chapter study guide, interactive quizzes, and timed practice exams.
+An Android app that helps users prepare for the Canadian Citizenship Test through study materials, chapter quizzes, and mock exams.
 
-## 🚀 Features
+## 🚧 Project Status
 
-- **Full Study Guide**: Contains all 12 chapters of the official study material, formatted for easy reading with rich text and intuitive layouts.
-- **Chapter-Specific Quizzes**: Test your knowledge immediately after studying. Each chapter includes a bank of randomized Multiple Choice and True/False questions.
-- **Timed Practice Exams**: Simulates the real testing environment with:
-  - 20 randomized questions per exam.
-  - A 30-minute "Stopwatch" countdown timer.
-  - 75% (15/20) passing mark logic.
-- **Instant Feedback**: Real-time grading with green/red visual cues and detailed explanations for every question.
-- **Progress Tracking**: Visual "Passed" indicators (green check marks) on the dashboard to track your exam history.
-- **Review Mode**: Review your performance after each exam to see correct vs. incorrect answers.
-- **Offline Access**: Built with a local database so you can study anywhere, anytime—no internet required.
+This project is still a work in progress and is **not ready for Google Play Store release yet**.
 
-## 🛠️ Technical Stack
+The core functionality is working, but there are still improvements planned before public release, including accessibility improvements, additional testing, release optimization, and Play Store requirements.
 
-- **Language**: Java
-- **UI Framework**: XML / Material Design Components
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Database**: Room Persistence Library (SQLite)
-- **Design Pattern**: Repository Pattern for a Single Source of Truth.
-- **UI Logic**: ViewBinding for safe and efficient layout interaction.
+## Screenshots
 
-## 🏗️ Work in Progress (Roadmap)
-- [x] Integrate 12 chapters of study material.
-- [x] Implement Practice Exam engine with timer.
-- [x] Add detailed question review system.
-- [x] Implement Mock Exam randomized pool.
-- [x] Dark Mode support.
+<p align="center">
+  <img src="screenshots/home page light mode.jpg" width="160" alt="Home Screen Light">
+  <img src="screenshots/home page.jpg" width="160" alt="Home Screen Dark">
+  <img src="screenshots/study guide.jpg" width="160" alt="Study Guide">
+  <img src="screenshots/chapter content.jpg" width="160" alt="Chapter Content">
+  <img src="screenshots/practice exam.jpg" width="160" alt="Practice Exam">
+  <img src="screenshots/results.jpg" width="160" alt="Results">
+</p>
+
+## Features
+
+- 📚 Study guide based on 12 citizenship chapters
+- 🔍 Search study materials
+- ⭐ Save favorite chapters
+- 📝 Chapter quizzes
+- ⏱️ Timed practice and mock exams
+- ✅ Review answers after completing exams
+- 📊 Progress tracking
+- 🌙 Light and Dark Mode support
+- 💾 Offline functionality
+
+## Tech Stack
+
+| Category | Technology |
+|-----------|------------|
+| Language | Java |
+| UI Framework | Android SDK, XML Layouts, Material Design Components |
+| Architecture | MVVM, Repository Pattern |
+| Database | Room Database (SQLite) |
+| Storage | SharedPreferences |
+| UI Components | RecyclerView, ViewBinding, Activities |
+| Build Tools | Android Studio, Gradle |
+| Version Control | Git, GitHub |
 
 ## ⚙️ Installation
+
 1. Clone this repository.
-2. Open the project in **Android Studio**.
-3. Build and run on an Android device or emulator.
+
+```bash
+git clone https://github.com/veuy/Canadiancitizenshipapp.git
+```
+
+2. Open the project in Android Studio (Ladybug or newer recommended).
+
+3. Build and run on an Android device or emulator (Target SDK 35).
+
+## Planned Improvements
+
+- [ ] Privacy Policy
+- [ ] Government Disclaimer
+- [ ] Accessibility improvements
+- [ ] Automated testing
+- [ ] Release build optimization
+- [ ] Enhanced progress statistics
+- [ ] Google Play Store release preparation
+
+## Disclaimer
+
+This application is an independent educational project and is not affiliated with, endorsed by, or sponsored by Immigration, Refugees and Citizenship Canada (IRCC) or the Government of Canada.
+
+## Author
+
+**Vincent Ely Uy**
+
+GitHub: https://github.com/veuy
