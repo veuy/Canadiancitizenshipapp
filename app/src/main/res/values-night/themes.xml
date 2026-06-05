@@ -6,10 +6,10 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/canadian_red</item>
         <item name="colorSecondaryVariant">@color/canadian_red</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">@color/canadian_red</item>
-        <item name="android:windowBackground">@color/canadian_white</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:windowBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnSurface">#FFFFFF</item>
     </style>
 </resources>
