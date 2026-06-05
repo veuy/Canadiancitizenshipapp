@@ -29,7 +29,7 @@ A modern, offline-first Android application designed to help users study for and
 - [x] Implement Practice Exam engine with timer.
 - [x] Add detailed question review system.
 - [x] Implement Mock Exam randomized pool.
-- [ ] Dark Mode support.
+- [x] Dark Mode support.
 
 ## ⚙️ Installation
 1. Clone this repository.
