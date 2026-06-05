@@ -15,7 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         
@@ -30,18 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupSettings() {
-        // Dark Mode Logic
         boolean isDarkMode = prefs.getBoolean("dark_mode", false);
-        
-        // Use programmatic set without listener
         binding.switchDarkMode.setChecked(isDarkMode);
 
-        // USE onClickListener instead of OnCheckedChangeListener
-        // This prevents the listener from firing during Activity recreation/state restoration
         binding.switchDarkMode.setOnClickListener(v -> {
             boolean isChecked = binding.switchDarkMode.isChecked();
-            
-            // USE COMMIT for immediate synchronous write
             prefs.edit().putBoolean("dark_mode", isChecked).commit();
             
             int desiredMode = isChecked ? 
@@ -53,11 +45,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        // Reset Progress Logic
         binding.cardResetProgress.setOnClickListener(v -> {
             new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Reset Progress")
-                .setMessage("Are you sure you want to clear all passed exams? This cannot be undone.")
+                .setMessage("Are you sure you want to clear all passed exams?")
                 .setPositiveButton("Reset", (dialog, which) -> {
                     SharedPreferences practicePrefs = getSharedPreferences("practice_prefs", MODE_PRIVATE);
                     practicePrefs.edit().clear().apply();

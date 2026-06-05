@@ -9,7 +9,6 @@ public class CitizenshipApp extends Application {
     public void onCreate() {
         super.onCreate();
         
-        // Apply the saved theme once when the app starts
         SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
         boolean isDarkMode = prefs.getBoolean("dark_mode", false);
         

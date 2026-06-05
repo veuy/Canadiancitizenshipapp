@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.CanadianCitizenshipApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/canadian_red</item>
         <item name="colorPrimaryVariant">@color/canadian_red</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/canadian_red</item>
         <item name="colorSecondaryVariant">@color/canadian_red</item>
         <item name="colorOnSecondary">@color/white</item>
-
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">#000000</item>
-
-        <!-- Surface and Background colors for Dark Mode -->
         <item name="android:windowBackground">#121212</item>
         <item name="colorSurface">#1E1E1E</item>
         <item name="colorOnSurface">#FFFFFF</item>
